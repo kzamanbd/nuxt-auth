@@ -18,7 +18,7 @@
 	});
 
 	const submit = () => {
-		console.log(form);
+		console.log(form.value);
 	};
 </script>
 
