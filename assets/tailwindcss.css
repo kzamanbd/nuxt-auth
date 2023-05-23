@@ -1,3 +1,12 @@
 @tailwind base;
 @tailwind components;
+@layer components {
+    .pre-auth {
+		@apply bg-gray-800 text-white p-3 my-3 rounded shadow overflow-x-auto;
+	}
+
+	.pre-auth span {
+		@apply text-green-400;
+	}
+}
 @tailwind utilities;
