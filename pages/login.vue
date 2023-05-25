@@ -13,14 +13,9 @@
 		submit,
 		isLoading,
 		validationErrors: errors
-	} = useSubmit(
-		() => {
-			return login(form);
-		},
-		{
-			onSuccess: () => router.push('/')
-		}
-	);
+	} = useSubmit(() => login(form), {
+		onSuccess: () => router.push('/dashboard')
+	});
 </script>
 
 <template>
