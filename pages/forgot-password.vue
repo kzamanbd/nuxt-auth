@@ -56,7 +56,10 @@
 			</div>
 
 			<div class="flex items-center justify-end mt-4">
-				<PrimaryButton class="ml-3" :disabled="inProgress || resetEmailSent">
+				<PrimaryButton
+					class="ml-3"
+					:class="{ 'opacity-25': inProgress }"
+					:disabled="inProgress || resetEmailSent">
 					Email Password Reset Link
 				</PrimaryButton>
 			</div>

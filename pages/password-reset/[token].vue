@@ -71,7 +71,9 @@
 			</div>
 
 			<div class="flex items-center justify-end mt-4">
-				<Button :disabled="inProgress">Reset Password</Button>
+				<PrimaryButton :class="{ 'opacity-25': inProgress }" :disabled="inProgress">
+					Reset Password
+				</PrimaryButton>
 			</div>
 		</form>
 	</AuthCard>
