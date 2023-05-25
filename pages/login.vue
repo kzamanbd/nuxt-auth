@@ -1,6 +1,6 @@
 <script setup>
-	definePageMeta({ middleware: ['guest'] });
 	useHead({ title: 'Login' });
+	definePageMeta({ middleware: ['guest'], layout: 'guest' });
 
 	const form = reactive({
 		username: '03183',

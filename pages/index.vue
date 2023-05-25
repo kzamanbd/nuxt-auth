@@ -13,6 +13,7 @@
 		<NuxtWelcome />
 	</div>
 </template>
-<script lang="ts" setup>
+<script setup>
+	definePageMeta({ layout: 'guest' });
 	const { isLoggedIn } = useAuth();
 </script>

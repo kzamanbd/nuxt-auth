@@ -1,6 +1,6 @@
 <script setup>
-	definePageMeta({ middleware: ['guest'] });
 	useHead({ title: 'Register' });
+	definePageMeta({ middleware: ['guest'], layout: 'guest' });
 
 	const router = useRouter();
 	const { register } = useAuth();

@@ -1,6 +1,6 @@
-<script setup lang="ts">
-	definePageMeta({ middleware: ['guest'] });
+<script setup>
 	useHead({ title: 'Forgot Password' });
+	definePageMeta({ middleware: ['guest'], layout: 'guest' });
 	const { forgotPassword } = useAuth();
 
 	const email = ref('');

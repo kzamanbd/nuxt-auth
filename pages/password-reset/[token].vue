@@ -1,5 +1,5 @@
-<script setup lang="ts">
-	definePageMeta({ middleware: ['guest'] });
+<script setup>
+	definePageMeta({ middleware: ['guest'], layout: 'guest' });
 	useHead({ title: 'Reset Password' });
 
 	const router = useRouter();
@@ -11,7 +11,7 @@
 	}
 
 	const data = reactive({
-		email: route.query.email as string,
+		email: route.query.email,
 		password: '',
 		password_confirmation: ''
 	});
@@ -20,7 +20,7 @@
 		submit,
 		isLoading,
 		validationErrors: errors
-	} = useSubmit(() => resetPassword({ token: token.value as string, ...data }), {
+	} = useSubmit(() => resetPassword({ token: token.value, ...data }), {
 		onSuccess: (result) =>
 			router.push({
 				path: '/login',

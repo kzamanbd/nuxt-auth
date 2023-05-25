@@ -9,8 +9,7 @@
 </template>
 
 <script setup>
-	definePageMeta({ middleware: ['auth'], layout: 'auth' });
-
+	definePageMeta({ middleware: ['auth'] });
 	useHead({
 		title: 'Authentication Overview',
 		description: 'See all available authentication & session information below.'

@@ -1,6 +1,6 @@
-<script setup lang="ts">
-	definePageMeta({ middleware: ['unverified'] });
+<script setup>
 	useHead({ title: 'Verify Email' });
+	definePageMeta({ middleware: ['unverified'], layout: 'guest' });
 
 	const { logout, resendEmailVerification } = useAuth();
 	const verificationIsSent = ref(false);
