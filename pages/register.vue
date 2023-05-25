@@ -22,13 +22,12 @@
 </script>
 
 <template>
-	<div>
-		<NuxtLink href="/">
-			<ApplicationLogo class="w-20 h-20 fill-current text-gray-500" />
-		</NuxtLink>
-	</div>
-
-	<div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white dark:bg-gray-800 shadow-md overflow-hidden sm:rounded-lg">
+	<AuthCard>
+		<template #logo>
+			<NuxtLink to="/">
+				<ApplicationLogo class="w-20 h-20 fill-current text-gray-500" />
+			</NuxtLink>
+		</template>
 		<form @submit.prevent="submit">
 			<div>
 				<InputLabel for="name" value="Name" />
@@ -89,7 +88,7 @@
 
 			<div class="flex items-center justify-end mt-4">
 				<NuxtLink
-					to="/"
+					to="/login"
 					class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800">
 					Already registered?
 				</NuxtLink>
@@ -99,5 +98,5 @@
 				</PrimaryButton>
 			</div>
 		</form>
-	</div>
+	</AuthCard>
 </template>
