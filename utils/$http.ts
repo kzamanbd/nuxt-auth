@@ -1,6 +1,7 @@
 import { $fetch, FetchError, FetchOptions } from 'ofetch';
 
 export const $X_TOKEN = 'X-TOKEN';
+const AUTH_HEADER = 'Authorization';
 
 // could not import these types from ofetch, so copied them here
 interface ResponseMap {
@@ -35,7 +36,7 @@ export async function $http<T, R extends ResponseType = 'json'>(
 	let headers: any = {
 		accept: 'application/json',
 		...options?.headers,
-		Authorization: `Bearer ${token}`
+		...(token && { [AUTH_HEADER]: `Bearer ${token}` })
 	};
 
 	if (process.server) {
