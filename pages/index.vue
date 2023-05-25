@@ -1,24 +1,18 @@
 <template>
-	<div class="max-w-5xl mx-auto mt-5 px-1">
-		<h3 class="text-xl font-bold">Authentication Overview</h3>
-		<p class="text-sm mb-4">See all available authentication & session information below.</p>
-		<AuthenticationStatus />
-		<pre class="pre-auth" v-if="status"><span>Status:</span> {{ status }}</pre>
-		<pre class="pre-auth" v-if="data"><span>Data:</span> {{ data }}</pre>
-		<pre class="pre-auth" v-if="csrfToken"><span>CSRF Token:</span> {{ csrfToken }}</pre>
-		<pre class="pre-auth" v-if="providers"><span>Providers:</span> {{ providers }}</pre>
+	<div class="relative min-h-screen bg-gray-100 dark:bg-gray-900 w-full">
+		<div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
+			<template v-if="isLoggedIn">
+				<NuxtLink to="/dashboard" class="ml-4 text-sm text-gray-700 underline"> Dashboard </NuxtLink>
+			</template>
+			<template v-else>
+				<NuxtLink to="/login" class="text-sm text-gray-700 underline"> Login </NuxtLink>
+				<NuxtLink to="/register" class="ml-4 text-sm text-gray-700 underline"> Register </NuxtLink>
+			</template>
+		</div>
+
+		<NuxtWelcome />
 	</div>
 </template>
-
-<script setup>
-	definePageMeta({ auth: true, layout: 'auth' });
-
-	useHead({
-		title: 'Authentication Overview',
-		description: 'See all available authentication & session information below.'
-	});
-	const { data, status, getCsrfToken, getProviders } = useSession();
-
-	const providers = await getProviders();
-	const csrfToken = await getCsrfToken();
+<script lang="ts" setup>
+	const { isLoggedIn } = useAuth();
 </script>

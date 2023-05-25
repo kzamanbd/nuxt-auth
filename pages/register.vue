@@ -1,26 +1,24 @@
 <script setup>
 	definePageMeta({ middleware: ['guest'] });
-	useHead({ title: 'Login' });
+	useHead({ title: 'Register' });
+
+	const router = useRouter();
+	const { register } = useAuth();
 
 	const form = reactive({
-		email: 'kzamanbn@gmail.com',
-		password: 'password',
-		remember: false
+		name: '',
+		email: '',
+		password: '',
+		password_confirmation: ''
 	});
-	const router = useRouter();
-	const { login } = useAuth();
+
 	const {
 		submit,
 		inProgress,
 		validationErrors: errors
-	} = useSubmit(
-		() => {
-			return login(form);
-		},
-		{
-			onSuccess: () => router.push('/')
-		}
-	);
+	} = useSubmit(() => register(form), {
+		onSuccess: () => router.push('/dashboard')
+	});
 </script>
 
 <template>
@@ -33,6 +31,21 @@
 	<div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white dark:bg-gray-800 shadow-md overflow-hidden sm:rounded-lg">
 		<form @submit.prevent="submit">
 			<div>
+				<InputLabel for="name" value="Name" />
+
+				<TextInput
+					id="name"
+					type="text"
+					class="mt-1 block w-full"
+					v-model="form.name"
+					required
+					autofocus
+					autocomplete="name" />
+
+				<InputError class="mt-2" :message="errors.name" />
+			</div>
+
+			<div class="mt-4">
 				<InputLabel for="email" value="Email" />
 
 				<TextInput
@@ -41,10 +54,9 @@
 					class="mt-1 block w-full"
 					v-model="form.email"
 					required
-					autofocus
 					autocomplete="username" />
 
-				<InputError class="mt-2" :message="errors?.email" />
+				<InputError class="mt-2" :message="errors.email" />
 			</div>
 
 			<div class="mt-4">
@@ -56,27 +68,34 @@
 					class="mt-1 block w-full"
 					v-model="form.password"
 					required
-					autocomplete="current-password" />
+					autocomplete="new-password" />
 
-				<InputError class="mt-2" :message="errors?.password" />
+				<InputError class="mt-2" :message="errors.password" />
 			</div>
 
-			<div class="block mt-4">
-				<label class="flex items-center">
-					<Checkbox name="remember" v-model:checked="form.remember" />
-					<span class="ml-2 text-sm text-gray-600 dark:text-gray-400">Remember me</span>
-				</label>
+			<div class="mt-4">
+				<InputLabel for="password_confirmation" value="Confirm Password" />
+
+				<TextInput
+					id="password_confirmation"
+					type="password"
+					class="mt-1 block w-full"
+					v-model="form.password_confirmation"
+					required
+					autocomplete="new-password" />
+
+				<InputError class="mt-2" :message="errors.password_confirmation" />
 			</div>
 
 			<div class="flex items-center justify-end mt-4">
 				<NuxtLink
-					href="/"
+					to="/"
 					class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800">
-					Forgot your password?
+					Already registered?
 				</NuxtLink>
 
 				<PrimaryButton class="ml-4" :class="{ 'opacity-25': inProgress }" :disabled="inProgress">
-					Log in
+					Register
 				</PrimaryButton>
 			</div>
 		</form>

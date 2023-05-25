@@ -1,11 +1,6 @@
 <script setup>
 	const showingNavigationDropdown = ref(false);
-	const auth = {
-		user: {
-			name: 'John Doe',
-			email: 'zaman@gmail.com'
-		}
-	};
+	const { user, logout } = useAuth();
 	const route = (value) => {
 		return value;
 	};
@@ -41,7 +36,7 @@
 										<button
 											type="button"
 											class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
-											{{ auth.user.name }}
+											{{ user.name }}
 
 											<svg
 												class="ml-2 -mr-0.5 h-4 w-4"
@@ -59,9 +54,7 @@
 
 								<template #content>
 									<DropdownLink :href="route('profile.edit')"> Profile </DropdownLink>
-									<DropdownLink :href="route('logout')" method="post" as="button">
-										Log Out
-									</DropdownLink>
+									<DropdownLink @click="logout" method="post" as="button"> Log Out </DropdownLink>
 								</template>
 							</Dropdown>
 						</div>
@@ -107,16 +100,14 @@
 				<div class="pt-4 pb-1 border-t border-gray-200 dark:border-gray-600">
 					<div class="px-4">
 						<div class="font-medium text-base text-gray-800 dark:text-gray-200">
-							{{ auth.user.name }}
+							{{ user.name }}
 						</div>
-						<div class="font-medium text-sm text-gray-500">{{ auth.user.email }}</div>
+						<div class="font-medium text-sm text-gray-500">{{ user.email }}</div>
 					</div>
 
 					<div class="mt-3 space-y-1">
 						<ResponsiveNavLink :href="route('profile.edit')"> Profile </ResponsiveNavLink>
-						<ResponsiveNavLink :href="route('logout')" method="post" as="button">
-							Log Out
-						</ResponsiveNavLink>
+						<ResponsiveNavLink @click="logout" method="post" as="button"> Log Out </ResponsiveNavLink>
 					</div>
 				</div>
 			</div>
