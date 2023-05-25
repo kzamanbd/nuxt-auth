@@ -9,7 +9,7 @@
 </script>
 
 <template>
-	<div class="w-full max-w-5xl mx-auto bg-white px-5 py-4 rounded-t shadow-xl">
+	<div class="bg-white px-5 py-4 rounded-t shadow-xl">
 		<div class="flex items-center justify-between">
 			<div class="flex items-center space-x-2">
 				<img
