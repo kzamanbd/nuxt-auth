@@ -64,10 +64,10 @@ export const useAuth = () => {
 	async function logout() {
 		if (!isLoggedIn.value) return;
 
-		await $http('/logout');
 		user.value = null;
-		cookie.value = null;
 		router.push('/login');
+		await $http('/logout');
+		cookie.value = null;
 	}
 
 	async function forgotPassword(email: string) {
