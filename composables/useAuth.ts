@@ -47,7 +47,7 @@ export const useAuth = () => {
 		if (isLoggedIn.value) return;
 
 		const response: any = await $http('/auth/login', { method: 'post', body: credentials });
-		cookie.value = response.token;
+		cookie.value = response.data?.token?.access_token;
 	}
 
 	async function register(credentials: RegisterCredentials) {
@@ -64,7 +64,7 @@ export const useAuth = () => {
 	async function logout() {
 		if (!isLoggedIn.value) return;
 
-		await $http('/auth/logout', { method: 'post' });
+		await $http('/logout', { method: 'get' });
 		user.value = null;
 		cookie.value = '';
 		await router.push('/login');
@@ -99,7 +99,7 @@ export const useAuth = () => {
 
 export const fetchCurrentUser = async () => {
 	try {
-		return await $http<User>('/auth/current-user', {
+		return await $http<User>('/user', {
 			redirectIfNotAuthenticated: false
 		});
 	} catch (error: any) {

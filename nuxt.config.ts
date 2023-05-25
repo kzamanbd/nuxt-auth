@@ -2,10 +2,10 @@
 export default defineNuxtConfig({
 	css: ['@/assets/tailwindcss.css'],
 	modules: ['@nuxtjs/tailwindcss'],
-    runtimeConfig: {
+	runtimeConfig: {
 		public: {
-			backendUrl: 'http://localhost:8000/api',
-			frontendUrl: 'http://localhost:3000'
+			apiURL: 'http://203.188.245.58:8889/api',
+			clientURL: 'http://localhost:3000'
 		}
-	},
+	}
 });

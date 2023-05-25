@@ -3,18 +3,18 @@
 	useHead({ title: 'Login' });
 
 	const form = reactive({
-		email: 'kzamanbn@gmail.com',
-		password: 'password',
+		username: '03183',
+		password: '123333',
 		remember: false
 	});
-	const router = useRouter();
 	const { login } = useAuth();
 	const {
 		submit,
 		isLoading,
 		validationErrors: errors
 	} = useSubmit(() => login(form), {
-		onSuccess: () => {
+		onSuccess: (response) => {
+			console.log(response);
 			window.location.href = '/dashboard';
 		}
 	});
@@ -29,13 +29,13 @@
 		</template>
 		<form @submit.prevent="submit">
 			<div>
-				<InputLabel for="email" value="Email" />
+				<InputLabel for="email" value="Username" />
 
 				<TextInput
 					id="email"
-					type="email"
+					type="text"
 					class="mt-1 block w-full"
-					v-model="form.email"
+					v-model="form.username"
 					required
 					autofocus
 					autocomplete="username" />

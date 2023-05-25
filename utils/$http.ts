@@ -20,14 +20,13 @@ export async function $http<T, R extends ResponseType = 'json'>(
 	path: RequestInfo,
 	{ redirectIfNotAuthenticated = true, redirectIfNotVerified = true, ...options }: HttpOptions<R> = {}
 ) {
-	const { backendUrl, frontendUrl } = useRuntimeConfig().public;
+	const { apiURL, clientURL } = useRuntimeConfig().public;
 	const router = useRouter();
 
 	let token = useCookie($X_TOKEN).value;
 
 	// on client initiate a csrf request and get it from the cookie set by laravel
 	if (process.client && ['get', 'post', 'delete', 'put', 'patch'].includes(options?.method?.toLowerCase() ?? '')) {
-		// await initCsrf();
 		// cannot use nuxt composables such as useCookie after an async operation:
 		// https://github.com/nuxt/framework/issues/5238
 		token = getCookie($X_TOKEN);
@@ -43,13 +42,13 @@ export async function $http<T, R extends ResponseType = 'json'>(
 		headers = {
 			...headers,
 			...useRequestHeaders(['cookie']),
-			referer: frontendUrl
+			referer: clientURL
 		};
 	}
 
 	try {
 		return await $fetch<T, R>(path, {
-			baseURL: backendUrl,
+			baseURL: apiURL,
 			...options,
 			headers
 		});
