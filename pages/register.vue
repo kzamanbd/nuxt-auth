@@ -17,7 +17,8 @@
 		isLoading,
 		validationErrors: errors
 	} = useSubmit(() => register(form), {
-		onSuccess: () => router.push('/dashboard')
+		onSuccess: () => router.push('/dashboard'),
+		onError: (error) => console.log(error)
 	});
 </script>
 
@@ -41,7 +42,7 @@
 					autofocus
 					autocomplete="name" />
 
-				<InputError class="mt-2" :message="errors.name" />
+				<InputError class="mt-2" :message="errors?.name" />
 			</div>
 
 			<div class="mt-4">
@@ -55,7 +56,7 @@
 					required
 					autocomplete="username" />
 
-				<InputError class="mt-2" :message="errors.email" />
+				<InputError class="mt-2" :message="errors?.email" />
 			</div>
 
 			<div class="mt-4">
@@ -69,7 +70,7 @@
 					required
 					autocomplete="new-password" />
 
-				<InputError class="mt-2" :message="errors.password" />
+				<InputError class="mt-2" :message="errors?.password" />
 			</div>
 
 			<div class="mt-4">
@@ -83,7 +84,7 @@
 					required
 					autocomplete="new-password" />
 
-				<InputError class="mt-2" :message="errors.password_confirmation" />
+				<InputError class="mt-2" :message="errors?.password_confirmation" />
 			</div>
 
 			<div class="flex items-center justify-end mt-4">
