@@ -1,13 +1,10 @@
 <script setup>
 	const showingNavigationDropdown = ref(false);
 	const { user, logout } = useAuth();
-	const route = (value) => {
-		return value;
-	};
 </script>
 
 <template>
-	<div class="min-h-screen bg-gray-100 dark:bg-gray-900">
+	<div class="min-h-screen bg-gray-50 dark:bg-gray-900">
 		<nav class="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
 			<!-- Primary Navigation Menu -->
 			<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -23,7 +20,7 @@
 
 						<!-- Navigation Links -->
 						<div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-							<NavLink href="/"> Dashboard </NavLink>
+							<NavLink href="/dashboard"> Dashboard </NavLink>
 						</div>
 					</div>
 
@@ -53,7 +50,7 @@
 								</template>
 
 								<template #content>
-									<DropdownLink :href="route('profile.edit')"> Profile </DropdownLink>
+									<DropdownLink href="/"> Profile </DropdownLink>
 									<DropdownLink @click="logout" method="post" as="button"> Log Out </DropdownLink>
 								</template>
 							</Dropdown>
@@ -106,7 +103,7 @@
 					</div>
 
 					<div class="mt-3 space-y-1">
-						<ResponsiveNavLink :href="route('profile.edit')"> Profile </ResponsiveNavLink>
+						<ResponsiveNavLink href="/"> Profile </ResponsiveNavLink>
 						<ResponsiveNavLink @click="logout" method="post" as="button"> Log Out </ResponsiveNavLink>
 					</div>
 				</div>
