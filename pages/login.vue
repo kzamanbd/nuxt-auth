@@ -14,7 +14,9 @@
 		isLoading,
 		validationErrors: errors
 	} = useSubmit(() => login(form), {
-		onSuccess: () => router.push('/dashboard')
+		onSuccess: () => {
+			window.location.href = '/dashboard';
+		}
 	});
 </script>
 

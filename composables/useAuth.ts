@@ -33,6 +33,7 @@ export const useAuth = () => {
 
 	const user = useUser();
 	const isLoggedIn = computed(() => !!user.value);
+	const cookie = useCookie($X_TOKEN);
 
 	async function refresh() {
 		try {
@@ -45,8 +46,8 @@ export const useAuth = () => {
 	async function login(credentials: LoginCredentials) {
 		if (isLoggedIn.value) return;
 
-		await $http('/login', { method: 'post', body: credentials });
-		await refresh();
+		const response: any = await $http('/auth/login', { method: 'post', body: credentials });
+		cookie.value = response.token;
 	}
 
 	async function register(credentials: RegisterCredentials) {
@@ -63,9 +64,9 @@ export const useAuth = () => {
 	async function logout() {
 		if (!isLoggedIn.value) return;
 
-		await $http('/logout', { method: 'post' });
+		await $http('/auth/logout', { method: 'post' });
 		user.value = null;
-
+		cookie.value = '';
 		await router.push('/login');
 	}
 
@@ -98,7 +99,7 @@ export const useAuth = () => {
 
 export const fetchCurrentUser = async () => {
 	try {
-		return await $http<User>('/api/user', {
+		return await $http<User>('/auth/current-user', {
 			redirectIfNotAuthenticated: false
 		});
 	} catch (error: any) {

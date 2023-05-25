@@ -1,7 +1,6 @@
 import { $fetch, FetchError, FetchOptions } from 'ofetch';
 
-const CSRF_COOKIE = 'XSRF-TOKEN';
-const CSRF_HEADER = 'X-XSRF-TOKEN';
+export const $X_TOKEN = 'X-TOKEN';
 
 // could not import these types from ofetch, so copied them here
 interface ResponseMap {
@@ -24,20 +23,20 @@ export async function $http<T, R extends ResponseType = 'json'>(
 	const { backendUrl, frontendUrl } = useRuntimeConfig().public;
 	const router = useRouter();
 
-	let token = useCookie(CSRF_COOKIE).value;
+	let token = useCookie($X_TOKEN).value;
 
 	// on client initiate a csrf request and get it from the cookie set by laravel
-	if (process.client && ['post', 'delete', 'put', 'patch'].includes(options?.method?.toLowerCase() ?? '')) {
-		await initCsrf();
+	if (process.client && ['get', 'post', 'delete', 'put', 'patch'].includes(options?.method?.toLowerCase() ?? '')) {
+		// await initCsrf();
 		// cannot use nuxt composables such as useCookie after an async operation:
 		// https://github.com/nuxt/framework/issues/5238
-		token = getCookie(CSRF_COOKIE);
+		token = getCookie($X_TOKEN);
 	}
 
 	let headers: any = {
 		accept: 'application/json',
 		...options?.headers,
-		...(token && { [CSRF_HEADER]: token })
+		Authorization: `Bearer ${token}`
 	};
 
 	if (process.server) {
@@ -52,8 +51,7 @@ export async function $http<T, R extends ResponseType = 'json'>(
 		return await $fetch<T, R>(path, {
 			baseURL: backendUrl,
 			...options,
-			headers,
-			credentials: 'include'
+			headers
 		});
 	} catch (error) {
 		if (!(error instanceof FetchError)) throw error;
@@ -77,15 +75,6 @@ export async function $http<T, R extends ResponseType = 'json'>(
 
 		throw error;
 	}
-}
-
-async function initCsrf() {
-	const { backendUrl } = useRuntimeConfig().public;
-
-	await $fetch('/sanctum/csrf-cookie', {
-		baseURL: backendUrl,
-		credentials: 'include'
-	});
 }
 
 // https://github.com/axios/axios/blob/bdf493cf8b84eb3e3440e72d5725ba0f138e0451/lib/helpers/cookies.js
