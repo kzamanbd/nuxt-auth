@@ -12,14 +12,14 @@ interface ResponseMap {
 type ResponseType = keyof ResponseMap | 'json';
 // end of copied types
 
-export type LarafetchOptions<R extends ResponseType> = FetchOptions<R> & {
+export type HttpOptions<R extends ResponseType> = FetchOptions<R> & {
 	redirectIfNotAuthenticated?: boolean;
 	redirectIfNotVerified?: boolean;
 };
 
-export async function $larafetch<T, R extends ResponseType = 'json'>(
+export async function $http<T, R extends ResponseType = 'json'>(
 	path: RequestInfo,
-	{ redirectIfNotAuthenticated = true, redirectIfNotVerified = true, ...options }: LarafetchOptions<R> = {}
+	{ redirectIfNotAuthenticated = true, redirectIfNotVerified = true, ...options }: HttpOptions<R> = {}
 ) {
 	const { backendUrl, frontendUrl } = useRuntimeConfig().public;
 	const router = useRouter();

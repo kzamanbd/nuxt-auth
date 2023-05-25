@@ -45,17 +45,17 @@ export const useAuth = () => {
 	async function login(credentials: LoginCredentials) {
 		if (isLoggedIn.value) return;
 
-		await $larafetch('/login', { method: 'post', body: credentials });
+		await $http('/login', { method: 'post', body: credentials });
 		await refresh();
 	}
 
 	async function register(credentials: RegisterCredentials) {
-		await $larafetch('/register', { method: 'post', body: credentials });
+		await $http('/register', { method: 'post', body: credentials });
 		await refresh();
 	}
 
 	async function resendEmailVerification() {
-		return await $larafetch<{ status: string }>('/email/verification-notification', {
+		return await $http<{ status: string }>('/email/verification-notification', {
 			method: 'post'
 		});
 	}
@@ -63,21 +63,21 @@ export const useAuth = () => {
 	async function logout() {
 		if (!isLoggedIn.value) return;
 
-		await $larafetch('/logout', { method: 'post' });
+		await $http('/logout', { method: 'post' });
 		user.value = null;
 
 		await router.push('/login');
 	}
 
 	async function forgotPassword(email: string) {
-		return await $larafetch<{ status: string }>('/forgot-password', {
+		return await $http<{ status: string }>('/forgot-password', {
 			method: 'post',
 			body: { email }
 		});
 	}
 
 	async function resetPassword(credentials: ResetPasswordCredentials) {
-		return await $larafetch<{ status: string }>('/reset-password', {
+		return await $http<{ status: string }>('/reset-password', {
 			method: 'post',
 			body: credentials
 		});
@@ -98,7 +98,7 @@ export const useAuth = () => {
 
 export const fetchCurrentUser = async () => {
 	try {
-		return await $larafetch<User>('/api/user', {
+		return await $http<User>('/api/user', {
 			redirectIfNotAuthenticated: false
 		});
 	} catch (error: any) {
