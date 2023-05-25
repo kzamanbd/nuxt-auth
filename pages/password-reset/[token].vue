@@ -18,7 +18,7 @@
 	const token = computed(() => route.params.token);
 	const {
 		submit,
-		inProgress,
+		isLoading,
 		validationErrors: errors
 	} = useSubmit(() => resetPassword({ token: token.value as string, ...data }), {
 		onSuccess: (result) =>
@@ -71,7 +71,7 @@
 			</div>
 
 			<div class="flex items-center justify-end mt-4">
-				<PrimaryButton :class="{ 'opacity-25': inProgress }" :disabled="inProgress">
+				<PrimaryButton :class="{ 'opacity-25': isLoading }" :disabled="isLoading">
 					Reset Password
 				</PrimaryButton>
 			</div>

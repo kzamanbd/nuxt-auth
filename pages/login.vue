@@ -11,7 +11,7 @@
 	const { login } = useAuth();
 	const {
 		submit,
-		inProgress,
+		isLoading,
 		validationErrors: errors
 	} = useSubmit(
 		() => {
@@ -74,7 +74,7 @@
 					Forgot your password?
 				</NuxtLink>
 
-				<PrimaryButton class="ml-4" :class="{ 'opacity-25': inProgress }" :disabled="inProgress">
+				<PrimaryButton class="ml-4" :class="{ 'opacity-25': isLoading }" :disabled="isLoading">
 					Log in
 				</PrimaryButton>
 			</div>

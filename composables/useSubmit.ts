@@ -8,13 +8,13 @@ export type UseSubmitOptions = {
 export function useSubmit<T>(callback: () => Promise<T>, options: UseSubmitOptions = {}) {
 	const validationErrors = ref<ValidationErrors>({});
 	const error = ref<Error | null>(null);
-	const inProgress = ref(false);
+	const isLoading = ref(false);
 	const succeeded = ref<Boolean | null>(null);
 
 	async function submit() {
 		validationErrors.value = {};
 		error.value = null;
-		inProgress.value = true;
+		isLoading.value = true;
 		succeeded.value = null;
 
 		try {
@@ -30,13 +30,13 @@ export function useSubmit<T>(callback: () => Promise<T>, options: UseSubmitOptio
 
 			if (e.response?.status !== 422) throw e;
 		} finally {
-			inProgress.value = false;
+			isLoading.value = false;
 		}
 	}
 
 	return {
 		submit,
-		inProgress,
+		isLoading,
 		succeeded,
 		validationErrors,
 		error

@@ -9,7 +9,7 @@
 
 	const {
 		submit,
-		inProgress,
+		isLoading,
 		validationErrors: errors
 	} = useSubmit(
 		() => {
@@ -58,8 +58,8 @@
 			<div class="flex items-center justify-end mt-4">
 				<PrimaryButton
 					class="ml-3"
-					:class="{ 'opacity-25': inProgress }"
-					:disabled="inProgress || resetEmailSent">
+					:class="{ 'opacity-25': isLoading }"
+					:disabled="isLoading || resetEmailSent">
 					Email Password Reset Link
 				</PrimaryButton>
 			</div>

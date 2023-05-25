@@ -14,7 +14,7 @@
 
 	const {
 		submit,
-		inProgress,
+		isLoading,
 		validationErrors: errors
 	} = useSubmit(() => register(form), {
 		onSuccess: () => router.push('/dashboard')
@@ -93,7 +93,7 @@
 					Already registered?
 				</NuxtLink>
 
-				<PrimaryButton class="ml-4" :class="{ 'opacity-25': inProgress }" :disabled="inProgress">
+				<PrimaryButton class="ml-4" :class="{ 'opacity-25': isLoading }" :disabled="isLoading">
 					Register
 				</PrimaryButton>
 			</div>
