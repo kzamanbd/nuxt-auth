@@ -1,6 +1,6 @@
 <script setup>
 	const showingNavigationDropdown = ref(false);
-	const { user, logout } = useAuth();
+	const { user = {}, logout } = useAuth();
 </script>
 
 <template>
