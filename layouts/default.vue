@@ -50,7 +50,7 @@
 								</template>
 
 								<template #content>
-									<DropdownLink href="/"> Profile </DropdownLink>
+									<DropdownLink href="/profile"> Profile </DropdownLink>
 									<button
 										type="button"
 										@click="logout"
