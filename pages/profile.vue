@@ -1,4 +1,8 @@
 <script setup>
+	import DeleteUser from '@/components/shared/DeleteUser.vue';
+	import UpdatePassword from '@/components/shared/UpdatePassword.vue';
+	import UpdateProfile from '@/components/shared/UpdateProfile.vue';
+
 	useHead({ title: 'Profile' });
 	definePageMeta({ middleware: ['auth'] });
 	const mustVerifyEmail = ref(false);
