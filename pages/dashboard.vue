@@ -21,4 +21,10 @@
 		}
 		return 'unauthenticated';
 	});
+
+	$http('/system/WebMenu', {
+		method: 'get'
+	}).then((res) => {
+		console.log(res);
+	});
 </script>
