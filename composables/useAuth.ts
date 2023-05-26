@@ -99,11 +99,11 @@ export const useAuth = () => {
 
 export const fetchCurrentUser = async () => {
 	try {
-		return await $http<User>('/user', {
+		return await $http<User>('/current-user', {
 			redirectIfNotAuthenticated: false
 		});
 	} catch (error: any) {
 		if ([401, 419].includes(error?.response?.status)) return null;
-		throw error;
+		console.error(error);
 	}
 };
