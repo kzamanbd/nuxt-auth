@@ -7,6 +7,8 @@
 		password: '123333',
 		remember: false
 	});
+	const unauthorizedError = ref('');
+
 	const { login } = useAuth();
 	const {
 		submit,
@@ -16,6 +18,10 @@
 		onSuccess: (response) => {
 			console.log(response);
 			window.location.href = '/dashboard';
+		},
+		onError: (error) => {
+			console.log(error.data);
+			unauthorizedError.value = error.data.message;
 		}
 	});
 </script>
@@ -40,7 +46,7 @@
 					autofocus
 					autocomplete="username" />
 
-				<InputError class="mt-2" :message="errors?.email" />
+				<InputError class="mt-2" :message="unauthorizedError" />
 			</div>
 
 			<div class="mt-4">
@@ -53,8 +59,6 @@
 					v-model="form.password"
 					required
 					autocomplete="current-password" />
-
-				<InputError class="mt-2" :message="errors?.password" />
 			</div>
 
 			<div class="block mt-4">
