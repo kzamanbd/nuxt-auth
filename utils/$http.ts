@@ -70,7 +70,7 @@ export async function $http<T, R extends ResponseType = 'json'>(
 		}
 
 		if ([500].includes(status)) {
-			console.error('[Laravel Error]', error.data?.message, error.data);
+			console.error('[Http Error]', error.data?.message, error.data);
 		}
 
 		throw error;
