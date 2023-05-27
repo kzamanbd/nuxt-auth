@@ -22,9 +22,6 @@
 		return 'unauthenticated';
 	});
 
-	$http('/system/WebMenu', {
-		method: 'get'
-	}).then((res) => {
-		console.log(res);
-	});
+	const res = await $http('/system/WebMenu');
+	console.log(res.data);
 </script>
