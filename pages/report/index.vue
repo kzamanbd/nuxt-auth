@@ -1,9 +1,70 @@
+<script setup>
+	definePageMeta({ middleware: ['auth'] });
+	useHead({
+		title: 'Report Overview'
+	});
+
+	const showModal = ref(false);
+	const reportResponse = ref(null);
+	const closeModal = () => {
+		showModal.value = false;
+	};
+	const openModal = () => {
+		showModal.value = true;
+		reportResponse.value = null;
+	};
+
+	// get query params
+	const route = useRoute();
+	const query = route.query;
+	console.log(query);
+	const ageDays = ref(null);
+	const odDays = ref(null);
+	const customerType = ref(0);
+
+	async function submitHandler(value) {
+		const response = await $http('/web/am-wise-aging-due-all-sdr048', {
+			method: 'POST',
+			body: {
+				depot_id: value.depot?.id || 0,
+				area_id: value.salesAreaId || 0,
+				customer_type: customerType.value || 0,
+				age_days: 0,
+				od_days: 0,
+				date_from: value.startDate,
+				date_to: value.endDate
+			}
+		});
+		reportResponse.value = response;
+		console.log(value);
+		showModal.value = false;
+	}
+</script>
+
 <template>
 	<div class="print:hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-4">
 		<SecondaryButton @click="openModal"> Open </SecondaryButton>
 	</div>
 
-	<TestReport :show="showModal" @close="closeModal" @update-report="updateReportData" />
+	<ReportModal :show="showModal" @close="closeModal" @submit="submitHandler">
+		<label for="customer_type">Customer Type</label>
+		<select v-model="customerType" class="form-control" id="customer_type">
+			<option value="0">Select Customer Type</option>
+			<option value="1">Cash</option>
+			<option value="2">Credit</option>
+			<option value="3">SC/Institute</option>
+		</select>
+		<div class="grid grid-cols-2 gap-4">
+			<div class="form-group">
+				<label>Age Days</label>
+				<input v-model="ageDays" type="number" min="0" class="form-control" placeholder="Age Days" />
+			</div>
+			<div class="form-group">
+				<label>Overdue Days</label>
+				<input v-model="odDays" type="number" min="0" class="form-control" placeholder="Overdue Days" />
+			</div>
+		</div>
+	</ReportModal>
 	<!-- display report -->
 
 	<table class="w-full" v-if="reportResponse?.rep_detail">
@@ -131,45 +192,63 @@
 		</tbody>
 	</table>
 </template>
-<script setup>
-	definePageMeta({ middleware: ['auth'] });
-	useHead({
-		title: 'Report Overview'
-	});
 
-	const showModal = ref(false);
-	const reportResponse = ref(null);
-	const closeModal = () => {
-		showModal.value = false;
-	};
-	const openModal = () => {
-		showModal.value = true;
-		reportResponse.value = null;
-	};
-
-	// get query params
-	const route = useRoute();
-	const query = route.query;
-	console.log(query);
-
-	function updateReportData(value) {
-		reportResponse.value = value;
-		console.log(value);
-		showModal.value = false;
-	}
-</script>
 <style>
-	table {
-		border-collapse: collapse;
-		font-size: 12px;
-	}
-
-	table,
-	th,
-	td {
+	@page {
+		size: 8.5in 11in;
+		margin: 1in 0.5in 0.5in 1in;
 		border: 1px solid #000000;
 	}
-	th {
+	p {
+		margin: 0;
+		font-family: 'Calibri';
+	}
+	table {
+		width: 100%;
+		border-collapse: collapse;
+		color: black;
+		font-size: 11px;
+		text-align: center;
+		font-family: 'Calibri';
+		page-break-inside: auto;
+	}
+	table tr th,
+	table tbody tr td {
+		font-family: 'Arial Narrow' !important;
+	}
+
+	thead p {
+		line-height: 1;
+		font-weight: 600;
+		padding: 2px 0;
+	}
+	.total-row {
+		border-top: 1px solid #000000 !important;
+		font-weight: 600;
+		text-align: right;
+		font-size: 12px;
+	}
+	.total-row.no-border {
+		border: none;
+	}
+	@media print {
+		table {
+			font-size: 14px;
+		}
+	}
+	.border {
+		border: 1px solid #000000 !important;
+	}
+	.left {
 		text-align: left;
+	}
+	.right {
+		text-align: right;
+	}
+	.center {
+		text-align: center;
+	}
+	.bold {
+		font-weight: 600;
 	}
 </style>
