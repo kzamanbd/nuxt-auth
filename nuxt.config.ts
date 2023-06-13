@@ -4,7 +4,7 @@ export default defineNuxtConfig({
 	modules: ['@nuxtjs/tailwindcss'],
 	runtimeConfig: {
 		public: {
-			apiURL: 'https://devapi.jerpbd.com/api',
+			apiURL: 'https://api.jerpbd.com:8081/api',
 			clientURL: 'http://localhost:3000'
 		}
 	}

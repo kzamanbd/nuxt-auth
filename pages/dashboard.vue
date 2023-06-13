@@ -21,7 +21,4 @@
 		}
 		return 'unauthenticated';
 	});
-
-	const res = await $http('/system/WebMenu');
-	console.log(res.data);
 </script>
