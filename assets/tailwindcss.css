@@ -1,7 +1,7 @@
 @tailwind base;
 @tailwind components;
 @layer components {
-    .pre-auth {
+	.pre-auth {
 		@apply bg-gray-800 text-white p-3 my-3 rounded shadow overflow-x-auto;
 	}
 
@@ -14,3 +14,6 @@
 }
 
 @tailwind utilities;
+.router-link-active {
+	@apply border-gray-300;
+}
