@@ -26,7 +26,7 @@
 		const response = await $http('/web/am-wise-aging-due-all-sdr048', {
 			method: 'POST',
 			body: {
-				depot_id: value.depot?.id || 0,
+				depot_id: value.depot || 0,
 				area_id: value.salesAreaId || 0,
 				customer_type: customerType.value || 0,
 				age_days: 0,
@@ -39,6 +39,11 @@
 		console.log(value);
 		showModal.value = false;
 	}
+	const customerTypeList = ref([
+		{ value: 1, name: 'Cash' },
+		{ value: 2, name: 'Credit' },
+		{ value: 3, name: 'SC/Institute' }
+	]);
 </script>
 
 <template>
@@ -47,23 +52,16 @@
 	</div>
 
 	<ReportModal :show="showModal" @close="closeModal" @submit="submitHandler">
-		<label for="customer_type">Customer Type</label>
-		<select v-model="customerType" class="form-control" id="customer_type">
-			<option value="0">Select Customer Type</option>
-			<option value="1">Cash</option>
-			<option value="2">Credit</option>
-			<option value="3">SC/Institute</option>
-		</select>
-		<div class="grid grid-cols-2 gap-4">
-			<div class="form-group">
-				<label>Age Days</label>
-				<input v-model="ageDays" type="number" min="0" class="form-control" placeholder="Age Days" />
-			</div>
-			<div class="form-group">
-				<label>Overdue Days</label>
-				<input v-model="odDays" type="number" min="0" class="form-control" placeholder="Overdue Days" />
-			</div>
-		</div>
+		<USelect
+			v-model="customerType"
+			:options="customerTypeList"
+			option-attribute="name"
+			value-attribute="value"
+			placeholder="Customer Type...">
+		</USelect>
+
+		<UInput v-model="ageDays" type="number" min="0" placeholder="Age Days" />
+		<UInput v-model="odDays" type="number" min="0" placeholder="Overdue Days" />
 	</ReportModal>
 	<!-- display report -->
 

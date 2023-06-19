@@ -2,6 +2,8 @@
 	useHead({ title: 'Login' });
 	definePageMeta({ middleware: ['guest'], layout: 'guest' });
 
+	const router = useRouter();
+
 	const form = reactive({
 		username: '03183',
 		password: '123333',
@@ -9,15 +11,11 @@
 	});
 	const unauthorizedError = ref('');
 
-	const { login } = useAuth();
-	const {
-		submit,
-		isLoading,
-		validationErrors: errors
-	} = useSubmit(() => login(form), {
-		onSuccess: (response) => {
-			console.log(response);
-			window.location.href = '/dashboard';
+	const { login, refresh } = useAuth();
+	const { submit, isLoading } = useSubmit(() => login(form), {
+		onSuccess: async (response) => {
+			await refresh();
+			router.push('/dashboard');
 		},
 		onError: (error) => {
 			console.log(error.data);
