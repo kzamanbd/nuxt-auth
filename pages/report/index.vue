@@ -191,7 +191,7 @@
 	</table>
 </template>
 
-<style>
+<style scoped>
 	@page {
 		size: 8.5in 11in;
 		margin: 1in 0.5in 0.5in 1in;
