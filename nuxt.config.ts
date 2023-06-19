@@ -5,7 +5,6 @@ export default defineNuxtConfig({
 	runtimeConfig: {
 		public: {
 			apiURL: 'https://api.jerpbd.com:8081/api',
-			clientURL: 'http://localhost:3000'
 		}
 	}
 });

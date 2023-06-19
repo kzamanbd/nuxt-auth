@@ -21,7 +21,7 @@ export async function $http<T, R extends ResponseType = 'json'>(
 	path: RequestInfo,
 	{ redirectIfNotAuthenticated = true, redirectIfNotVerified = true, ...options }: HttpOptions<R> = {}
 ) {
-	const { apiURL, clientURL } = useRuntimeConfig().public;
+	const config = useRuntimeConfig();
 	const router = useRouter();
 
 	let token = useCookie($X_TOKEN).value;
@@ -43,13 +43,12 @@ export async function $http<T, R extends ResponseType = 'json'>(
 		headers = {
 			...headers,
 			...useRequestHeaders(['cookie']),
-			referer: clientURL
 		};
 	}
 
 	try {
 		return await $fetch<T, R>(path, {
-			baseURL: apiURL,
+			baseURL: config.public.apiURL,
 			...options,
 			headers
 		});
