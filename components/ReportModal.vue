@@ -1,15 +1,18 @@
 <script setup>
-	defineProps({
-		showModal: {
-			type: Boolean,
-			default: false
-		}
-	});
+	const showModal = ref(false);
+	const props = defineProps(['show']);
 
 	const emit = defineEmits(['close', 'submit']);
 	const closeModal = () => {
 		emit('close');
 	};
+
+	watch(
+		() => props.show,
+		(value) => {
+			showModal.value = value;
+		}
+	);
 
 	const depotList = ref([]);
 	const regionsList = ref([]);
@@ -117,7 +120,7 @@
 </script>
 
 <template>
-	<Modal :show="showModal" @close="closeModal">
+	<UModal v-model="showModal" @close="closeModal">
 		<h2 class="text-lg font-medium text-gray-900 dark:text-gray-100 p-4">Report</h2>
 		<div class="p-6 grid grid-cols-2 gap-4">
 			<USelect
@@ -166,5 +169,5 @@
 				<PrimaryButton class="ml-3" @click="printReport"> Print </PrimaryButton>
 			</div>
 		</div>
-	</Modal>
+	</UModal>
 </template>

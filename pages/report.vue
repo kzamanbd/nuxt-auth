@@ -15,9 +15,6 @@
 	};
 
 	// get query params
-	const route = useRoute();
-	const query = route.query;
-	console.log(query);
 	const ageDays = ref(null);
 	const odDays = ref(null);
 	const customerType = ref(0);
@@ -47,7 +44,7 @@
 </script>
 
 <template>
-	<div class="print:hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-4">
+	<div class="print:hidden max-w-7xl mx-auto flex justify-center px-4 sm:px-6 lg:px-8 mt-4">
 		<SecondaryButton @click="openModal"> Open </SecondaryButton>
 	</div>
 

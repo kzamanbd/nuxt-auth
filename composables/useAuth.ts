@@ -23,15 +23,6 @@ export type ResetPasswordCredentials = {
 	token: string;
 };
 
-// api endpoint
-const LOGIN = '/auth/login';
-const REGISTER = '/auth/register';
-const LOGOUT = '/logout';
-const FORGOT_PASSWORD = '/forgot-password';
-const RESET_PASSWORD = '/auth/reset-password';
-const CURRENT_USER = '/current-user';
-const EMAIL_VERIFICATION = '/email/verification-notification';
-
 // Value is initialized in: ~/plugins/auth.ts
 export const useUser = () => {
 	return useState<User | undefined | null>('user', () => undefined);
@@ -55,19 +46,19 @@ export const useAuth = () => {
 	async function login(credentials: LoginCredentials) {
 		if (isLoggedIn.value) return;
 
-		const response: any = await $http(LOGIN, { method: 'post', body: credentials });
+		const response: any = await $http('/auth/login', { method: 'post', body: credentials });
 		cookie.value = response.data?.token?.access_token; // set cookie
 		return response;
 	}
 
 	async function register(credentials: RegisterCredentials) {
-		const response: any = await $http(REGISTER, { method: 'post', body: credentials });
+		const response: any = await $http('/auth/register', { method: 'post', body: credentials });
 		cookie.value = response.token; // set cookie
 		return response;
 	}
 
 	async function resendEmailVerification() {
-		return await $http<{ status: string }>(EMAIL_VERIFICATION, { method: 'post' });
+		return await $http<{ status: string }>('/email/verification-notification', { method: 'post' });
 	}
 
 	async function logout() {
@@ -75,19 +66,19 @@ export const useAuth = () => {
 
 		user.value = null;
 		router.push('/login');
-		await $http(LOGOUT);
+		await $http('/logout');
 		cookie.value = null;
 	}
 
 	async function forgotPassword(email: string) {
-		return await $http(FORGOT_PASSWORD, {
+		return await $http('/forgot-password', {
 			method: 'post',
 			body: { email }
 		});
 	}
 
 	async function resetPassword(credentials: ResetPasswordCredentials) {
-		return await $http(RESET_PASSWORD, {
+		return await $http('/auth/reset-password', {
 			method: 'post',
 			body: credentials
 		});
@@ -108,7 +99,7 @@ export const useAuth = () => {
 
 export const fetchCurrentUser = async () => {
 	try {
-		return await $http<User>(CURRENT_USER, {
+		return await $http<User>('/current-user', {
 			redirectIfNotAuthenticated: false
 		});
 	} catch (error: any) {
