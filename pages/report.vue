@@ -9,9 +9,11 @@
 	const closeModal = () => {
 		showModal.value = false;
 	};
+	const toast = useToast();
 	const openModal = () => {
 		showModal.value = true;
 		reportResponse.value = null;
+		toast.add({ title: 'Hello world!' });
 	};
 
 	// get query params
