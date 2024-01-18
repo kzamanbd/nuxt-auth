@@ -1,4 +1,4 @@
-import { $fetch, FetchError, FetchOptions } from 'ofetch';
+import { $fetch, FetchError, type FetchOptions } from 'ofetch';
 
 export const $X_TOKEN = 'X-TOKEN';
 const AUTH_HEADER = 'Authorization';
@@ -10,14 +10,13 @@ interface ResponseMap {
     arrayBuffer: ArrayBuffer;
 }
 type ResponseType = keyof ResponseMap | 'json';
-// end of copied types
 
 export type HttpOptions<R extends ResponseType> = FetchOptions<R> & {
     redirectIfNotAuthenticated?: boolean;
     redirectIfNotVerified?: boolean;
 };
 
-export async function $http<T, R extends ResponseType = 'json'>(
+export async function $request<T, R extends ResponseType = 'json'>(
     path: RequestInfo,
     { redirectIfNotAuthenticated = true, redirectIfNotVerified = true, ...options }: HttpOptions<R> = {}
 ) {
@@ -56,6 +55,7 @@ export async function $http<T, R extends ResponseType = 'json'>(
         if (!(error instanceof FetchError)) throw error;
 
         // when any of the following redirects occur and the final throw is not caught then nuxt SSR will log the following error:
+
         // [unhandledRejection] Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
 
         const status = error.response?.status ?? -1;

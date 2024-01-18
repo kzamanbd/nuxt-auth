@@ -46,19 +46,19 @@ export const useAuth = () => {
     async function login(credentials: LoginCredentials) {
         if (isLoggedIn.value) return;
 
-        const response: any = await $http('/auth/login', { method: 'post', body: credentials });
+        const response: any = await $request('/auth/login', { method: 'post', body: credentials });
         cookie.value = response.data?.token?.access_token; // set cookie
         return response;
     }
 
     async function register(credentials: RegisterCredentials) {
-        const response: any = await $http('/auth/register', { method: 'post', body: credentials });
+        const response: any = await $request('/auth/register', { method: 'post', body: credentials });
         cookie.value = response.token; // set cookie
         return response;
     }
 
     async function resendEmailVerification() {
-        return await $http<{ status: string }>('/email/verification-notification', { method: 'post' });
+        return await $request<{ status: string }>('/email/verification-notification', { method: 'post' });
     }
 
     async function logout() {
@@ -66,19 +66,19 @@ export const useAuth = () => {
 
         user.value = null;
         router.push('/login');
-        await $http('/logout');
+        await $request('/logout');
         cookie.value = null;
     }
 
     async function forgotPassword(email: string) {
-        return await $http('/forgot-password', {
+        return await $request('/forgot-password', {
             method: 'post',
             body: { email }
         });
     }
 
     async function resetPassword(credentials: ResetPasswordCredentials) {
-        return await $http('/auth/reset-password', {
+        return await $request('/auth/reset-password', {
             method: 'post',
             body: credentials
         });
@@ -99,7 +99,7 @@ export const useAuth = () => {
 
 export const fetchCurrentUser = async () => {
     try {
-        return await $http<User>('/current-user', {
+        return await $request<User>('/current-user', {
             redirectIfNotAuthenticated: false
         });
     } catch (error: any) {
