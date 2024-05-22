@@ -32,7 +32,7 @@ export type ResetPasswordCredentials = {
     token: string;
 };
 
-// Value is initialized in: ~/plugins/auth.ts
+// Value is initialized in: @/plugins/auth.ts
 export const useUser = () => {
     return useState<User | undefined | null>('user', () => undefined);
 };
@@ -47,7 +47,6 @@ export const useAuth = () => {
     async function refresh() {
         try {
             const res = await fetchCurrentUser();
-            console.log('refresh', res?.data.user);
             user.value = res?.data.user;
         } catch {
             user.value = null;
