@@ -46,8 +46,7 @@ export const useAuth = () => {
 
     async function refresh() {
         try {
-            const res = await fetchCurrentUser();
-            user.value = res?.data.user;
+            user.value = await fetchCurrentUser();
         } catch {
             user.value = null;
         }
@@ -109,9 +108,10 @@ export const useAuth = () => {
 
 export const fetchCurrentUser = async () => {
     try {
-        return await $request<LoginResponse>('/current-user', {
+        const res = await $request<LoginResponse>('/current-user', {
             redirectIfNotAuthenticated: false
         });
+        return res.data.user;
     } catch (error: any) {
         if ([401, 419].includes(error?.response?.status)) return null;
         console.error(error);
