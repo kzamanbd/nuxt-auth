@@ -1,7 +1,16 @@
 export type User = {
-    name?: string;
+    name: string;
     email?: string;
-    image?: string;
+    photo?: string;
+};
+
+export type LoginResponse = {
+    code: string;
+    status: string;
+    message: string;
+    data: {
+        user: User;
+    };
 };
 
 export type LoginCredentials = {
@@ -37,7 +46,9 @@ export const useAuth = () => {
 
     async function refresh() {
         try {
-            user.value = await fetchCurrentUser();
+            const res = await fetchCurrentUser();
+            console.log('refresh', res?.data.user);
+            user.value = res?.data.user;
         } catch {
             user.value = null;
         }
@@ -99,7 +110,7 @@ export const useAuth = () => {
 
 export const fetchCurrentUser = async () => {
     try {
-        return await $request<User>('/current-user', {
+        return await $request<LoginResponse>('/current-user', {
             redirectIfNotAuthenticated: false
         });
     } catch (error: any) {
