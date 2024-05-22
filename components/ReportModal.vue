@@ -31,7 +31,7 @@
 
     async function getDepotList() {
         try {
-            const response = await $request('/web/v3/all-depot-under-sbu');
+            const response = await $http('/web/v3/all-depot-under-sbu');
             depotList.value = response.wh_info;
         } catch (error) {
             console.error(error);
@@ -43,7 +43,7 @@
     async function getRegionList() {
         try {
             const depotId = selectedDepot.value;
-            const response = await $request(`/web/get-base-region-list/${depotId}`);
+            const response = await $http(`/web/get-base-region-list/${depotId}`);
             regionsList.value = response.sales_area;
             salesForceList.value = response.rsm_list;
             selectedRegion.value = null;
@@ -65,7 +65,7 @@
 
         try {
             const regionId = selectedRegion.value;
-            const response = await $request(`/web/get-base-area-list/${regionId}`);
+            const response = await $http(`/web/get-base-area-list/${regionId}`);
             areaList.value = response.sales_area;
             salesForceList.value = response.am_list;
             selectedArea.value = null;
@@ -87,7 +87,7 @@
 
         try {
             const areaId = selectedArea.value;
-            const response = await $request(`/web/get-base-territory-list/${areaId}`);
+            const response = await $http(`/web/get-base-territory-list/${areaId}`);
             territoryList.value = response.sales_area;
             salesForceList.value = response.mio_list;
             selectedTerritory.value = null;

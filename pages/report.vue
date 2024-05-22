@@ -22,7 +22,7 @@
     const customerType = ref(0);
 
     async function submitHandler(value) {
-        const response = await $request('/web/am-wise-aging-due-all-sdr048', {
+        const response = await $http('/web/am-wise-aging-due-all-sdr048', {
             method: 'POST',
             body: {
                 depot_id: value.depot || 0,

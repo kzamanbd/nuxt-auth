@@ -1,7 +1,13 @@
 import { $fetch, FetchError, type FetchOptions } from 'ofetch';
 
 export const $X_TOKEN = 'X-TOKEN';
-const AUTH_HEADER = 'Authorization';
+export const $AUTH_HEADER = 'Authorization';
+
+// https://github.com/axios/axios/blob/bdf493cf8b84eb3e3440e72d5725ba0f138e0451/lib/helpers/cookies.js
+function getCookie(name: string) {
+    const match = document.cookie.match(new RegExp('(^|;\\s*)(' + name + ')=([^;]*)'));
+    return match ? decodeURIComponent(match[3]) : null;
+}
 
 // could not import these types from ofetch, so copied them here
 interface ResponseMap {
@@ -16,7 +22,7 @@ export type HttpOptions<R extends ResponseType> = FetchOptions<R> & {
     redirectIfNotVerified?: boolean;
 };
 
-export async function $request<T, R extends ResponseType = 'json'>(
+export async function $http<T, R extends ResponseType = 'json'>(
     path: RequestInfo,
     { redirectIfNotAuthenticated = true, redirectIfNotVerified = true, ...options }: HttpOptions<R> = {}
 ) {
@@ -35,7 +41,7 @@ export async function $request<T, R extends ResponseType = 'json'>(
     let headers: any = {
         accept: 'application/json',
         ...options?.headers,
-        ...(token && { [AUTH_HEADER]: `Bearer ${token}` })
+        ...(token && { [$AUTH_HEADER]: `Bearer ${token}` })
     };
 
     if (process.server) {
@@ -74,10 +80,4 @@ export async function $request<T, R extends ResponseType = 'json'>(
 
         throw error;
     }
-}
-
-// https://github.com/axios/axios/blob/bdf493cf8b84eb3e3440e72d5725ba0f138e0451/lib/helpers/cookies.js
-function getCookie(name: string) {
-    const match = document.cookie.match(new RegExp('(^|;\\s*)(' + name + ')=([^;]*)'));
-    return match ? decodeURIComponent(match[3]) : null;
 }
