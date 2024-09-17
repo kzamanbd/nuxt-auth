@@ -1,6 +1,7 @@
 {
     "name": "nuxt-auth",
     "private": true,
+    "type": "module",
     "scripts": {
         "build": "nuxt build",
         "dev": "nuxt dev",
@@ -9,9 +10,10 @@
         "postinstall": "nuxt prepare"
     },
     "dependencies": {
-        "@nuxt/ui": "^2.16.0",
-        "nuxt": "^3.11.2",
-        "vue": "^3.4.27",
-        "vue-router": "^4.3.2"
+        "@nuxt/ui": "^2.18.4",
+        "@tailwindcss/forms": "^0.5.9",
+        "nuxt": "^3.13.0",
+        "vue": "latest",
+        "vue-router": "latest"
     }
 }

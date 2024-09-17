@@ -6,7 +6,7 @@
 
     const form = reactive({
         username: '03183',
-        password: '123333',
+        password: '123456',
         remember: false
     });
     const unauthorizedError = ref('');
@@ -35,7 +35,7 @@
             <div>
                 <InputLabel for="email" value="Username" />
 
-                <UInput
+                <TextInput
                     id="email"
                     type="text"
                     class="mt-1 block w-full"
@@ -50,7 +50,7 @@
             <div class="mt-4">
                 <InputLabel for="password" value="Password" />
 
-                <UInput
+                <TextInput
                     id="password"
                     type="password"
                     class="mt-1 block w-full"
@@ -61,7 +61,7 @@
 
             <div class="block mt-4">
                 <label class="flex items-center">
-                    <Checkbox name="remember" v-model:checked="form.remember" />
+                    <Checkbox name="remember" v-model="form.remember" :checked="form.remember" />
                     <span class="ml-2 text-sm text-gray-600 dark:text-gray-400">Remember me</span>
                 </label>
             </div>
@@ -73,9 +73,7 @@
                     Forgot your password?
                 </NuxtLink>
 
-                <PrimaryButton class="ml-4" :class="{ 'opacity-25': isLoading }" :disabled="isLoading">
-                    Log in
-                </PrimaryButton>
+                <PrimaryButton class="ml-4" :disabled="isLoading"> Log in </PrimaryButton>
             </div>
         </form>
     </AuthCard>

@@ -113,7 +113,6 @@ export const fetchCurrentUser = async () => {
         });
         return res.data.user;
     } catch (error: any) {
-        if ([401, 419].includes(error?.response?.status)) return null;
-        console.error(error);
+        return null;
     }
 };
