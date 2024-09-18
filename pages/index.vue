@@ -1,19 +1,28 @@
 <template>
-    <div class="relative min-h-screen bg-gray-100 dark:bg-gray-900 w-full">
-        <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
-            <template v-if="isLoggedIn">
-                <NuxtLink to="/dashboard" class="ml-4 text-sm text-gray-700 underline"> Dashboard </NuxtLink>
-            </template>
-            <template v-else>
-                <NuxtLink to="/login" class="text-sm text-gray-700 underline"> Login </NuxtLink>
-                <NuxtLink to="/register" class="ml-4 text-sm text-gray-700 underline"> Register </NuxtLink>
-            </template>
+    <div class="flex flex-col items-center justify-center min-h-screen">
+        <h1 class="mb-8 text-4xl font-bold text-gray-800 dark:text-white">Let's Discuss. 💬</h1>
+        <div class="space-x-4">
+            <a
+                href="/v1/dashboard"
+                class="inline-flex items-center px-4 py-2 text-xs font-semibold tracking-widest text-white uppercase transition duration-150 ease-in-out bg-gray-800 border border-transparent rounded-md hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2">
+                Dashboard V1
+            </a>
+            <NuxtLink
+                to="/v1/login"
+                class="inline-flex items-center px-4 py-2 text-xs font-semibold tracking-widest text-gray-700 uppercase transition duration-150 ease-in-out bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 disabled:opacity-25">
+                Login V1
+            </NuxtLink>
+            <NuxtLink
+                to="/v2/login"
+                class="inline-flex items-center px-4 py-2 text-xs font-semibold tracking-widest text-gray-700 uppercase transition duration-150 ease-in-out bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 disabled:opacity-25">
+                Login V2
+            </NuxtLink>
         </div>
-
-        <NuxtWelcome />
     </div>
 </template>
 <script setup>
     definePageMeta({ layout: 'guest' });
-    const { isLoggedIn } = useAuth();
+    useHead({
+        title: "Let's Discuss"
+    });
 </script>

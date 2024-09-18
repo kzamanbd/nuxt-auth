@@ -74,7 +74,7 @@ export const useAuth = () => {
         if (!isLoggedIn.value) return;
 
         user.value = null;
-        router.push('/login');
+        router.push('/v1/login');
         await $http('/logout');
         cookie.value = null;
     }
