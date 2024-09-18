@@ -9,7 +9,6 @@ function getCookie(name: string) {
     return match ? decodeURIComponent(match[3]) : null;
 }
 
-// could not import these types from ofetch, so copied them here
 interface ResponseMap {
     blob: Blob;
     text: string;
@@ -31,10 +30,8 @@ export async function $http<T, R extends ResponseType = 'json'>(
 
     let token = useCookie($X_TOKEN).value;
 
-    // on client initiate a csrf request and get it from the cookie set by laravel
-    if (process.client) {
+    if (import.meta.client) {
         // cannot use nuxt composables such as useCookie after an async operation:
-        // https://github.com/nuxt/framework/issues/5238
         token = getCookie($X_TOKEN);
     }
 
@@ -44,7 +41,7 @@ export async function $http<T, R extends ResponseType = 'json'>(
         ...(token && { [$AUTH_HEADER]: `Bearer ${token}` })
     };
 
-    if (process.server) {
+    if (import.meta.server) {
         headers = {
             ...headers,
             ...useRequestHeaders(['cookie'])
@@ -59,10 +56,6 @@ export async function $http<T, R extends ResponseType = 'json'>(
         });
     } catch (error) {
         if (!(error instanceof FetchError)) throw error;
-
-        // when any of the following redirects occur and the final throw is not caught then nuxt SSR will log the following error:
-
-        // [unhandledRejection] Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
 
         const status = error.response?.status ?? -1;
 

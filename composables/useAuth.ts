@@ -34,7 +34,13 @@ export type ResetPasswordCredentials = {
 
 // Value is initialized in: @/plugins/auth.ts
 export const useUser = () => {
-    return useState<User | undefined | null>('user', () => undefined);
+    return useState<User>('user', () => {
+        return {
+            name: '',
+            email: '',
+            photo: ''
+        };
+    });
 };
 
 export const useAuth = () => {
@@ -45,11 +51,7 @@ export const useAuth = () => {
     const cookie = useCookie($X_TOKEN);
 
     async function refresh() {
-        try {
-            user.value = await fetchCurrentUser();
-        } catch {
-            user.value = null;
-        }
+        user.value = await fetchCurrentUser();
     }
 
     async function login(credentials: LoginCredentials) {
@@ -73,7 +75,7 @@ export const useAuth = () => {
     async function logout() {
         if (!isLoggedIn.value) return;
 
-        user.value = null;
+        user.value = { name: '', email: '', photo: '' };
         router.push('/v1/login');
         await $http('/logout');
         cookie.value = null;
@@ -113,6 +115,6 @@ export const fetchCurrentUser = async () => {
         });
         return res.data.user;
     } catch (error: any) {
-        return null;
+        return { name: '', email: '', photo: '' };
     }
 };
