@@ -15,7 +15,7 @@
     const { submit, isLoading } = useSubmit(() => login(form), {
         onSuccess: async (response) => {
             await refresh();
-            router.push('/v2/dashboard');
+            router.push('/dashboard');
         },
         onError: (error) => {
             console.log(error.data);
