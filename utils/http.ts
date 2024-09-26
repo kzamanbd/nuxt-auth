@@ -26,8 +26,8 @@ export async function $http<T, R extends ResponseType = 'json'>(
     path: RequestInfo,
     { redirectIfNotAuthenticated = true, redirectIfNotVerified = true, ...options }: HttpOptions<R> = {}
 ) {
-    const config = useRuntimeConfig();
     const router = useRouter();
+    const config = useRuntimeConfig();
 
     let token = useCookie($X_TOKEN).value;
 
@@ -40,6 +40,7 @@ export async function $http<T, R extends ResponseType = 'json'>(
 
     let headers: any = {
         accept: 'application/json',
+        credentials: 'include',
         ...options?.headers,
         ...(token && { [$AUTH_HEADER]: `Bearer ${token}` })
     };
@@ -60,10 +61,6 @@ export async function $http<T, R extends ResponseType = 'json'>(
     } catch (error) {
         if (!(error instanceof FetchError)) throw error;
 
-        // when any of the following redirects occur and the final throw is not caught then nuxt SSR will log the following error:
-
-        // [unhandledRejection] Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
-
         const status = error.response?.status ?? -1;
 
         if (redirectIfNotAuthenticated && [401, 419].includes(status)) {
@@ -75,7 +72,7 @@ export async function $http<T, R extends ResponseType = 'json'>(
         }
 
         if ([500].includes(status)) {
-            console.error('[Http Error]', error.data?.message, error.data);
+            console.error('[Http Error]', error.data?.message);
         }
 
         throw error;
